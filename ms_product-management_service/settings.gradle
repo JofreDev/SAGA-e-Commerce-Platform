@@ -1,0 +1,32 @@
+pluginManagement {
+    repositories {
+        //mavenLocal()
+        //maven { url = '...' }
+        gradlePluginPortal()
+    }
+}
+
+buildCache {
+    local {
+        directory = new File(rootDir, 'build-cache')
+    }
+}
+
+rootProject.name = 'productManagement'
+
+include ':app-service'
+include ':model'
+include ':usecase'
+project(':app-service').projectDir = file('./applications/app-service')
+project(':model').projectDir = file('./domain/model')
+project(':usecase').projectDir = file('./domain/usecase')
+include ':r2dbc-h2-sql'
+project(':r2dbc-h2-sql').projectDir = file('./infrastructure/driven-adapters/r2dbc-h2-sql')
+include ':reactive-web'
+project(':reactive-web').projectDir = file('./infrastructure/entry-points/reactive-web')
+include ':metrics'
+project(':metrics').projectDir = file('./infrastructure/helpers/metrics')
+include ':mq-listener'
+project(':mq-listener').projectDir = file('./infrastructure/entry-points/mq-listener')
+include ':mq-sender'
+project(':mq-sender').projectDir = file('./infrastructure/driven-adapters/mq-sender')
