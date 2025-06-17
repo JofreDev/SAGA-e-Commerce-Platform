@@ -118,4 +118,41 @@ class SampleRabbitMQMessageListenerTest {
 
         verify(receiver).close();
     }
+
+    @Test
+    void shouldSendToFallbackOnProcessingError() {
+        // JSON bien formado, pero simulamos error en el caso de uso
+        String json = """
+            {
+              "clientId": "client-123",
+              "date": "2025-06-15T10:30:00",
+              "paymentMethod": "CREDIT_CARD",
+              "comment": "Primera compra",
+              "items": []
+            }
+            """;
+
+        byte[] body = json.getBytes(StandardCharsets.UTF_8);
+
+        Delivery delivery = new Delivery(null,
+                new AMQP.BasicProperties.Builder().correlationId("fallback-001").build(),
+                body
+        );
+
+        when(receiver.consumeNoAck("QUEUE_PURCHASE_ORDER"))
+                .thenReturn(Flux.just(delivery));
+
+        when(purchaseTransactionUseCase.sendPurchaseOrderEvent(any(PurchaseDTO.class), eq("fallback-001")))
+                .thenReturn(Mono.error(new RuntimeException("Simulated processing failure")));
+
+        when(sampleRabbitMQFallbackSender.executeFallbackQueue(eq(delivery), any(Throwable.class), eq("fallback-001")))
+                .thenReturn(Mono.empty());
+
+        // Act
+        listener.initReceiver();
+
+        // Assert
+        verify(purchaseTransactionUseCase, timeout(1000)).sendPurchaseOrderEvent(any(PurchaseDTO.class), eq("fallback-001"));
+        verify(sampleRabbitMQFallbackSender, timeout(1000)).executeFallbackQueue(eq(delivery), any(Throwable.class), eq("fallback-001"));
+    }
 }

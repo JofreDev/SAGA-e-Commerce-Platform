@@ -6,6 +6,7 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Delivery;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -27,7 +28,7 @@ public class SampleRabbitMQFallbackSender {
     private final Sender sender;
 
     public SampleRabbitMQFallbackSender(@Value("${rabbit.mq.output-error-queue}") String outputErrorQueue,
-                                        Sender sender) {
+                                        @Qualifier("errorSender") Sender sender) {
         this.sender = sender;
         this.outputErrorQueue = outputErrorQueue;
     }

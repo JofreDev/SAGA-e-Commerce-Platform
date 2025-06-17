@@ -5,6 +5,7 @@ import co.com.saga.commerce.model.gateways.PurchaseTransactionGateway;
 import com.rabbitmq.client.AMQP;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -24,7 +25,7 @@ public class SampleRabbitMQMessageSender implements PurchaseTransactionGateway {
     private final Sender sender;
 
     public SampleRabbitMQMessageSender(@Value("{rabbit.mq.output-queue}") String outputQueue,
-                                       Sender sender) {
+                                       @Qualifier("mainSender") Sender sender) {
         this.sender = sender;
         this.outputQueue = outputQueue;
     }
