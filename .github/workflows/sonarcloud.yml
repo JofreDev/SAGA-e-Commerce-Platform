@@ -50,6 +50,11 @@ jobs:
             -Dsonar.organization=edu-gavidia \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=$SONAR_TOKEN
+      - name: Check stagging
+        run: ls 
+
+      - name: Check if JAR was generated
+        run: ls -lh ms_product-management_service/build/libs/
 
       - name: Upload JAR Artifact
         uses: actions/upload-artifact@v4
