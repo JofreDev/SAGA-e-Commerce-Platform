@@ -1,3 +1,29 @@
+## Estructura Arquitectura orientada al dominio de 3 capas de ms_product-management_service
+
+
+```
+├── 📂 ms_product-management_service
+│   ├── 📂 applications/
+│   ├── 📂 deployment/
+│   │   │   📑 Dockerfile
+│   ├── 📂 domain/ -> Business Logic (entities, errors messages, functionalities)
+│   ├── ├── 📂 model/
+│   ├── ├── 📂 usecase/
+│   ├── ├── ├── 📂 purchasetransaction/
+│   │   │   │   │   📑 PurchaseTransactionUseCase.java // Example of one of the use cases
+│   ├── 📂 gradle/
+│   ├── 📂 infrastructure/
+│   ├── ├── 📂 driven-adapters/
+│   ├── ├── ├── 📂 r2dbc-h2-sql/ -> Database en memory
+│   ├── ├── ├── 📂 mq-sender/ -> asynchronous message sending
+│   ├── ├── 📂 entry-points/
+│   ├── ├── ├── 📂 r2dbc-h2-sql/ -> rest consume reactive-web
+│   ├── ├── ├── 📂 mq-listener/ -> asynchronous message consume
+│   ├── ├── 📂 helpers/
+│   ├── 📑 .gitignore
+
+```
+
 # Proyecto Base Implementando Clean Architecture
 
 ## Antes de Iniciar

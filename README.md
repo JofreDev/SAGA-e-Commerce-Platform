@@ -9,7 +9,7 @@ Esta solución sigue principios de Clean Architecture, EDA, Asincronismo y Arqui
 ![draft2 0](https://github.com/user-attachments/assets/bfee587c-b807-44c4-90c7-798ab5f89ece)
 
 
-## 🧩 Componentes Principales
+## Componentes Principales
 
 ### 1. API Gateway (`commerce-api`)
 - Orquestador de entrada.
@@ -54,7 +54,7 @@ Esta solución sigue principios de Clean Architecture, EDA, Asincronismo y Arqui
 
 ---
 
-## 📉 Casos de error
+## Casos de error
 
 Para mantener la claridad visual del diagrama, los flujos de error no se representan en su totalidad. Sin embargo, el sistema contempla:
 
