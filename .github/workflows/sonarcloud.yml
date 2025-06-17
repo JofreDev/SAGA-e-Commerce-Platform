@@ -39,6 +39,7 @@ jobs:
       - name: Grant execute permission for gradlew
         working-directory: "./ms_product-management_service"
         run: chmod +x ./gradlew
+
       - name: Build and Analyze Webflux API
         working-directory: "./ms_product-management_service"
         env:
@@ -49,3 +50,9 @@ jobs:
             -Dsonar.organization=edu-gavidia \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=$SONAR_TOKEN
+
+      - name: Upload JAR Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: product-management-jar
+          path: ms_product-management_service/build/libs/*.jar
