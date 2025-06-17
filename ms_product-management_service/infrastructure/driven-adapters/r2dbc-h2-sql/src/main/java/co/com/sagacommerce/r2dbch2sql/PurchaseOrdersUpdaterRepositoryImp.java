@@ -5,6 +5,7 @@ import co.com.saga.commerce.model.gateways.repository.PurchaseOrdersRepository;
 import co.com.sagacommerce.model.validation.exceptions.TechnicalException;
 import co.com.sagacommerce.r2dbch2sql.crud.PurchaseRepositoryAdapter;
 import lombok.AllArgsConstructor;
+import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -34,4 +35,10 @@ public class PurchaseOrdersUpdaterRepositoryImp implements PurchaseOrdersReposit
                                 .then(Mono.just(savedPurchase))
                 );
     }
+
+    @Override
+    public Mono<PurchaseDTO> deletePurchaseOrder(PurchaseDTO purchaseDTO) {
+        return null;
+    }
+
 }

@@ -2,6 +2,7 @@ package co.com.sagacommerce.mqlistener;
 
 import co.com.sagacommerce.model.dto.PurchaseDTO;
 import co.com.sagacommerce.model.validation.exceptions.BusinessException;
+import co.com.sagacommerce.mqlistener.fallback.SampleRabbitMQFallbackSender;
 import co.com.sagacommerce.usecase.purchasetransaction.PurchaseTransactionUseCase;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -24,42 +25,46 @@ public class SampleRabbitMQMessageListener {
 
     private final PurchaseTransactionUseCase purchaseTransactionUseCase;
 
+    private final SampleRabbitMQFallbackSender sampleRabbitMQFallbackSender;
+
     private final Receiver receiver;
 
-    private final String INPUT_QUEUE;
+    private final String inputQueue;
+
 
     private Disposable disposable;
 
-    public SampleRabbitMQMessageListener(@Value("${rabbit.mq.input-queue}") String inputQueue, Receiver receiver,
-                                         PurchaseTransactionUseCase purchaseTransactionUseCase) {
+    public SampleRabbitMQMessageListener(@Value("${rabbit.mq.input-queue}") String inputQueue,
+                                         Receiver receiver, PurchaseTransactionUseCase purchaseTransactionUseCase,
+                                         SampleRabbitMQFallbackSender sampleRabbitMQFallbackSender) {
         this.purchaseTransactionUseCase = purchaseTransactionUseCase;
         this.receiver = receiver;
-        INPUT_QUEUE = inputQueue;
+        this.inputQueue = inputQueue;
+        this.sampleRabbitMQFallbackSender = sampleRabbitMQFallbackSender;
     }
 
 
     @PostConstruct
     public void initReceiver() {
-        disposable = receiver.consumeNoAck(INPUT_QUEUE)
+        disposable = receiver.consumeNoAck(inputQueue)
                 .doOnNext(m -> log.info("Received message " + new String(m.getBody()) +
                         " with correlationId " + m.getProperties().getCorrelationId()))
                 .filter(delivery -> delivery.getProperties().getCorrelationId() != null)
-                .flatMap(delivery ->
-                        Mono.defer(() ->
-                                fromJson(new String(delivery.getBody()), PurchaseDTO.class)
-                                        .map(purchaseRequest ->
-                                                purchaseTransactionUseCase
-                                                        .sendPurchaseOrderEvent(
-                                                                purchaseRequest,
-                                                                delivery.getProperties().getCorrelationId())
-                                                        .subscribe()
-                                        )
-                                        .onErrorResume(e -> {
-                                            log.log(Level.SEVERE, e.getMessage());
-                                            return Mono.empty(); // o lógica de DLQ
-                                        })
-                        )
-                ).subscribe();
+                .flatMap(delivery -> {
+                    String correlationId = delivery.getProperties().getCorrelationId();
+
+                    return fromJson(new String(delivery.getBody()), PurchaseDTO.class)
+                            .flatMap(purchaseRequest ->
+                                    purchaseTransactionUseCase
+                                            .sendPurchaseOrderEvent(purchaseRequest, correlationId)
+                            )
+                            .onErrorResume(error -> {
+                                log.log(Level.SEVERE, "Error processing message: " + error.getMessage(), error);
+                                return sampleRabbitMQFallbackSender
+                                        .executeFallbackQueue(delivery, error, correlationId);
+                            });
+                })
+                .subscribe();
     }
 
     @PreDestroy

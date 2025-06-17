@@ -6,5 +6,6 @@ import reactor.core.publisher.Mono;
 public interface PurchaseOrdersRepository {
 
     Mono<PurchaseDTO> addPurchaseOrder(PurchaseDTO purchaseDTO); // save -> Post
+    Mono<PurchaseDTO> deletePurchaseOrder(PurchaseDTO purchaseDTO);
 
 }

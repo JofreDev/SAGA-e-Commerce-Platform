@@ -6,6 +6,7 @@ import co.com.sagacommerce.r2dbch2sql.helper.ReactiveAdapterOperations;
 import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 
 @Repository
@@ -23,5 +24,9 @@ public class PurchaseItemRepositoryAdapter extends ReactiveAdapterOperations<
     public Flux<PurchaseItemDTO> findAllByPurchaseId(Integer purchaseId) {
         return repository.findAllByPurchaseId(purchaseId)
                 .map(this::toEntity);
+    }
+
+    public Mono<Void> deletePurchaseItemById(Integer purchaseItemId) {
+        return repository.deleteById(purchaseItemId);
     }
 }

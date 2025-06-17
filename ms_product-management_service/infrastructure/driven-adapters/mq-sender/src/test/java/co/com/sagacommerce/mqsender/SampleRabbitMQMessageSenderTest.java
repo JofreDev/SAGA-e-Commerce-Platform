@@ -63,10 +63,8 @@ class SampleRabbitMQMessageSenderTest {
 
 
 
-        // Act
         sampleRabbitMQMessageSender.sendPurchaseOrder(purchaseDTO, "123").block();
 
-        // Assert
         ArgumentCaptor<Mono<OutboundMessage>> captor = ArgumentCaptor.forClass(Mono.class);
         verify(sender).send(captor.capture());
 
@@ -77,6 +75,7 @@ class SampleRabbitMQMessageSenderTest {
         StepVerifier.create(capturedMono)
                 .assertNext(message -> {
                     assertEquals(outputQueue, message.getRoutingKey());
+                    assertNotNull(message.getProperties());
                     assertEquals("123", message.getProperties().getCorrelationId());
                     assertNotNull(message.getBody());
                     assertTrue(message.getBody().length > 0);

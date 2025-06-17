@@ -14,12 +14,12 @@ import static co.com.sagacommerce.model.validation.ValidationService.validate;
 public class PurchaseItemDTO {
 
     private Integer id;
-    private int productId;
+    private Integer productId;
     private int quantity;
     private double total;
     private Integer purchaseId;
 
-    public PurchaseItemDTO(Integer id, int productId, int quantity, double total, int purchaseId) {
+    public PurchaseItemDTO(Integer id, Integer productId, int quantity, double total, int purchaseId) {
         validate(productId, Objects::isNull, "Invalid reference to productId");
         validate(quantity, Objects::isNull, "Invalid quantity");
 

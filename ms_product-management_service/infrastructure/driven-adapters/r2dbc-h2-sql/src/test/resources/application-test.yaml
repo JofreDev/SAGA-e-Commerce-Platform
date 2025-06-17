@@ -1,0 +1,20 @@
+spring:
+  r2dbc:
+    url: r2dbc:h2:mem:///testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    generate-unique-name: false
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:database-sql/schema.sql
+
+  h2:
+    console:
+      enabled: false
+
+logging:
+  level:
+    root: ERROR
+    org.springframework.r2dbc: DEBUG

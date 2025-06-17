@@ -23,4 +23,8 @@ public class PurchaseItemUpdaterRepositoryImp {
                         Mono.error(new TechnicalException(DATABASE_TABLE_MODIFICATION_ERROR,error)))
                 .doOnNext(item -> System.out.println("Item guardado " + item));
     }
+
+    public Mono<Void> deletePurchaseItemOrder(Integer purchaseItemId){
+        return purchaseItemRepositoryAdapter.deletePurchaseItemById(purchaseItemId);
+    }
 }

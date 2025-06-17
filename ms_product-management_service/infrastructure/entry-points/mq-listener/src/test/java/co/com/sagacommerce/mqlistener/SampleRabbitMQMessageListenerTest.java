@@ -1,6 +1,7 @@
 package co.com.sagacommerce.mqlistener;
 
 import co.com.sagacommerce.model.dto.PurchaseDTO;
+import co.com.sagacommerce.mqlistener.fallback.SampleRabbitMQFallbackSender;
 import co.com.sagacommerce.usecase.purchasetransaction.PurchaseTransactionUseCase;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Delivery;
@@ -20,14 +21,16 @@ import static org.mockito.Mockito.*;
 class SampleRabbitMQMessageListenerTest {
 
     private Receiver receiver;
+    private SampleRabbitMQFallbackSender sampleRabbitMQFallbackSender;
     private PurchaseTransactionUseCase purchaseTransactionUseCase;
     private SampleRabbitMQMessageListener listener;
 
     @BeforeEach
     void setUp() {
         receiver = mock(Receiver.class);
+        sampleRabbitMQFallbackSender = mock(SampleRabbitMQFallbackSender.class);
         purchaseTransactionUseCase = mock(PurchaseTransactionUseCase.class);
-        listener = new SampleRabbitMQMessageListener("QUEUE_PURCHASE_ORDER", receiver, purchaseTransactionUseCase);
+        listener = new SampleRabbitMQMessageListener("QUEUE_PURCHASE_ORDER", receiver, purchaseTransactionUseCase,sampleRabbitMQFallbackSender);
     }
 
     @Test
@@ -100,7 +103,7 @@ class SampleRabbitMQMessageListenerTest {
         byte[] body = json.getBytes(StandardCharsets.UTF_8);
         Disposable disposable = mock(Disposable.class);
         when(disposable.isDisposed()).thenReturn(false);
-        listener = new SampleRabbitMQMessageListener("QUEUE_PURCHASE_ORDER", receiver, purchaseTransactionUseCase);
+        listener = new SampleRabbitMQMessageListener("QUEUE_PURCHASE_ORDER", receiver, purchaseTransactionUseCase,sampleRabbitMQFallbackSender);
         Delivery delivery = new Delivery(null,
                 new AMQP.BasicProperties.Builder().correlationId("123").build(),
                 body

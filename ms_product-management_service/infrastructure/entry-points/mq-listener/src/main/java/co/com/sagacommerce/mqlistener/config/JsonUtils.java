@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtils {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     static {
         OBJECT_MAPPER.registerModule(new JavaTimeModule());

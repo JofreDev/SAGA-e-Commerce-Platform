@@ -36,6 +36,7 @@ rabbit:
     input-concurrency: 1
     output-concurrency: 1
     output-queue: "OUT_PURCHASE_ORDER.QUEUE.RES"
+    output-error-queue: "ERROR_PURCHASE_ORDER.QUEUE.RES"
 
 
 

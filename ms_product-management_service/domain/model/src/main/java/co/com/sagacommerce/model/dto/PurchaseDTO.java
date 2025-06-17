@@ -1,5 +1,6 @@
 package co.com.sagacommerce.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import static co.com.sagacommerce.model.validation.ValidationService.validate;
 @Data
 @Builder(toBuilder = true)
 @NoArgsConstructor
+@AllArgsConstructor
 public class PurchaseDTO {
 
     private Integer id;
@@ -31,7 +33,7 @@ public class PurchaseDTO {
         validate(clientId, isNullOrBlank, "Invalid clientId");
         validate(paymentMethod, isNullOrBlank, "Invalid payment method");
         validate(date, Objects::isNull, "Invalid date");
-        validate(clientId, Objects::isNull, "Invalid items");
+        validate(items, Objects::isNull, "Invalid items");
         this.id = id;
         this.clientId = clientId;
         this.date = date;
@@ -40,8 +42,6 @@ public class PurchaseDTO {
         this.state = state;
         this.items = items;
     }
-
-
 
 
 }
