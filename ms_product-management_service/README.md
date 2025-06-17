@@ -6,7 +6,7 @@
 │   ├── 📂 applications/
 │   ├── 📂 deployment/
 │   │   │   📑 Dockerfile
-│   ├── 📂 domain/
+│   ├── 📂 domain/ -> Business Logic (entities, errors messages, functionalities)
 │   ├── ├── 📂 model/
 │   ├── ├── 📂 usecase/
 │   ├── ├── ├── 📂 purchasetransaction/
