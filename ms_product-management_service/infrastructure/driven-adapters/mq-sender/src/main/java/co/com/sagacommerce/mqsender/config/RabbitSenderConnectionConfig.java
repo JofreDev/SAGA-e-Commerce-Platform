@@ -35,13 +35,11 @@ public class RabbitSenderConnectionConfig {
     }
 
     @Bean
-    @Qualifier("mainSender")
     public Sender mainSender(SenderOptions senderOptions) {
         return RabbitFlux.createSender(senderOptions);
     }
 
     @Bean
-    @Qualifier("errorSender")
     public Sender errorSender(SenderOptions senderOptions) {
         return RabbitFlux.createSender(senderOptions);
     }
