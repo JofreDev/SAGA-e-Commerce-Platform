@@ -1,10 +1,9 @@
 package co.com.sagacommerce.r2dbch2sql;
 
 import co.com.sagacommerce.model.dto.PurchaseDTO;
-import co.com.sagacommerce.model.gateways.Repository.PurchaseItemReaderRepository;
-import co.com.sagacommerce.model.gateways.Repository.PurchaseOrdersReaderRepository;
+import co.com.saga.commerce.model.gateways.repository.PurchaseItemReaderRepository;
+import co.com.saga.commerce.model.gateways.repository.PurchaseOrdersReaderRepository;
 import co.com.sagacommerce.model.validation.exceptions.BusinessException;
-import co.com.sagacommerce.model.validation.exceptions.TechnicalException;
 import co.com.sagacommerce.r2dbch2sql.crud.PurchaseRepositoryAdapter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;

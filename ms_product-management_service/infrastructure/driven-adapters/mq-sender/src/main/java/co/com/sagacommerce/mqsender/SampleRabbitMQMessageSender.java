@@ -1,7 +1,7 @@
 package co.com.sagacommerce.mqsender;
 
 import co.com.sagacommerce.model.dto.PurchaseDTO;
-import co.com.sagacommerce.model.gateways.PurchaseTransactionGateway;
+import co.com.saga.commerce.model.gateways.PurchaseTransactionGateway;
 import com.rabbitmq.client.AMQP;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.java.Log;

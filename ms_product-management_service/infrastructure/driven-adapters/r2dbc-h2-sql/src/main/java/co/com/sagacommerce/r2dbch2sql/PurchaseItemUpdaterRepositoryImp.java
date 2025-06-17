@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 
-import java.util.UUID;
-
 import static co.com.sagacommerce.model.validation.exceptions.message.TechnicalErrorMessage.DATABASE_TABLE_MODIFICATION_ERROR;
 
 @Repository

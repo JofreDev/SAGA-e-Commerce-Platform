@@ -1,7 +1,7 @@
 package co.com.sagacommerce.usecase.stockreader;
 
 import co.com.sagacommerce.model.dto.CategoryDTO;
-import co.com.sagacommerce.model.gateways.Repository.CategoryStockReaderRepository;
+import co.com.saga.commerce.model.gateways.repository.CategoryStockReaderRepository;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

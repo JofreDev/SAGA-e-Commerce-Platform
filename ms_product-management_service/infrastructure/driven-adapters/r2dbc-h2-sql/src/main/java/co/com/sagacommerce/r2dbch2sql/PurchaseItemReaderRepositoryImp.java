@@ -1,7 +1,7 @@
 package co.com.sagacommerce.r2dbch2sql;
 
 import co.com.sagacommerce.model.dto.PurchaseItemDTO;
-import co.com.sagacommerce.model.gateways.Repository.PurchaseItemReaderRepository;
+import co.com.saga.commerce.model.gateways.repository.PurchaseItemReaderRepository;
 import co.com.sagacommerce.model.validation.exceptions.BusinessException;
 import co.com.sagacommerce.r2dbch2sql.crud.PurchaseItemRepositoryAdapter;
 import lombok.RequiredArgsConstructor;

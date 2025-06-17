@@ -1,4 +1,4 @@
-package co.com.sagacommerce.model.gateways.Repository;
+package co.com.saga.commerce.model.gateways.repository;
 
 import co.com.sagacommerce.model.dto.ProductDTO;
 import reactor.core.publisher.Flux;
@@ -11,9 +11,6 @@ public interface ProductStockReaderRepository {
     Flux<ProductDTO> getProductsByCategory(int categoryId);
 
     Mono<ProductDTO> getProduct(int productId);
-
-
-    //ProductDTO save(ProductDTO product);
 
 
 }

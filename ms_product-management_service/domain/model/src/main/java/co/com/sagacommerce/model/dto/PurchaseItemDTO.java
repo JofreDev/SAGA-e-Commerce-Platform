@@ -1,12 +1,10 @@
 package co.com.sagacommerce.model.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import static co.com.sagacommerce.model.validation.ValidationService.validate;
 

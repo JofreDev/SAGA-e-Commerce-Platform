@@ -3,11 +3,11 @@ package co.com.sagacommerce.usecase.purchasetransaction;
 import co.com.sagacommerce.model.dto.ProductDTO;
 import co.com.sagacommerce.model.dto.PurchaseDTO;
 import co.com.sagacommerce.model.dto.PurchaseItemDTO;
-import co.com.sagacommerce.model.gateways.PurchaseTransactionGateway;
-import co.com.sagacommerce.model.gateways.Repository.ProductStockUpdaterRepository;
-import co.com.sagacommerce.model.gateways.Repository.PurchaseOrdersReaderRepository;
-import co.com.sagacommerce.model.gateways.Repository.PurchaseOrdersRepository;
-import co.com.sagacommerce.model.gateways.Repository.ProductStockReaderRepository;
+import co.com.saga.commerce.model.gateways.PurchaseTransactionGateway;
+import co.com.saga.commerce.model.gateways.repository.ProductStockUpdaterRepository;
+import co.com.saga.commerce.model.gateways.repository.PurchaseOrdersReaderRepository;
+import co.com.saga.commerce.model.gateways.repository.PurchaseOrdersRepository;
+import co.com.saga.commerce.model.gateways.repository.ProductStockReaderRepository;
 import co.com.sagacommerce.model.validation.exceptions.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -29,7 +29,7 @@ public class PurchaseTransactionUseCase {
     private final ProductStockUpdaterRepository productStockUpdater;
     private final PurchaseTransactionGateway purchaseTransactionGateway;
 
-    private final String STATE_PENDING = "PENDING";
+    private static final String STATE_PENDING = "PENDING";
 
     public Mono<Void> sendPurchaseOrderEvent(PurchaseDTO purchaseRequest, String correlationId) {
 
@@ -81,9 +81,9 @@ public class PurchaseTransactionUseCase {
                 purchaseRequest.getItems().stream()
                         .filter(item -> item.getProductId() == Integer.parseInt(product.getProductId()))
                         .findFirst()
-                        .ifPresent(item -> {
-                            item.setTotal(item.getQuantity() * product.getPrice().doubleValue());
-                        })
+                        .ifPresent(item ->
+                                item.setTotal(item.getQuantity() * product.getPrice().doubleValue())
+                        )
         );
     }
 

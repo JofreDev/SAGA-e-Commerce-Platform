@@ -1,7 +1,7 @@
 package co.com.sagacommerce.r2dbch2sql;
 
 import co.com.sagacommerce.model.dto.ProductDTO;
-import co.com.sagacommerce.model.gateways.Repository.ProductStockUpdaterRepository;
+import co.com.saga.commerce.model.gateways.repository.ProductStockUpdaterRepository;
 import co.com.sagacommerce.r2dbch2sql.crud.ProductRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;

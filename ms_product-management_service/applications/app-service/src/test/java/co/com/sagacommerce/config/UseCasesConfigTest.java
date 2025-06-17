@@ -1,7 +1,7 @@
 package co.com.sagacommerce.config;
 
-import co.com.sagacommerce.model.gateways.PurchaseTransactionGateway;
-import co.com.sagacommerce.model.gateways.Repository.*;
+import co.com.saga.commerce.model.gateways.PurchaseTransactionGateway;
+import co.com.saga.commerce.model.gateways.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Import;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
-public class UseCasesConfigTest {
+class UseCasesConfigTest {
 
     @Test
     void testUseCaseBeansExist() {

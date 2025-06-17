@@ -39,7 +39,6 @@ class DTOUtilsTest {
     void shouldThrowExceptionWhenObjectIsNotSerializable() {
         assertThrows(Exception.class, () -> {
             Object notSerializable = new Object() {
-                private final Thread thread = new Thread();
             };
 
             DTOUtils.fromDTOToBytes(notSerializable);

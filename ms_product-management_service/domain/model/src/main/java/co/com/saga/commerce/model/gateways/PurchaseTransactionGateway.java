@@ -1,4 +1,4 @@
-package co.com.sagacommerce.model.gateways;
+package co.com.saga.commerce.model.gateways;
 
 import co.com.sagacommerce.model.dto.PurchaseDTO;
 import reactor.core.publisher.Mono;

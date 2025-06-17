@@ -1,4 +1,4 @@
-package co.com.sagacommerce.model.gateways.Repository;
+package co.com.saga.commerce.model.gateways.repository;
 
 import co.com.sagacommerce.model.dto.PurchaseDTO;
 import reactor.core.publisher.Flux;

@@ -7,13 +7,12 @@ import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
-import java.util.UUID;
 
 @Repository
 public class PurchaseItemRepositoryAdapter extends ReactiveAdapterOperations<
         PurchaseItemDTO,
         PurchaseItem,
-        UUID,
+        Integer,
         PurchaseItemCrudRepository
         > {
 
