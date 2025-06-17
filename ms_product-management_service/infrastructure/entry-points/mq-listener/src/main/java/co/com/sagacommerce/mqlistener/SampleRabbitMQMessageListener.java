@@ -1,7 +1,6 @@
 package co.com.sagacommerce.mqlistener;
 
 import co.com.sagacommerce.model.dto.PurchaseDTO;
-import co.com.sagacommerce.model.validation.exceptions.BusinessException;
 import co.com.sagacommerce.mqlistener.fallback.SampleRabbitMQFallbackSender;
 import co.com.sagacommerce.usecase.purchasetransaction.PurchaseTransactionUseCase;
 import jakarta.annotation.PostConstruct;
@@ -10,7 +9,6 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import reactor.core.Disposable;
-import reactor.core.publisher.Mono;
 import reactor.rabbitmq.Receiver;
 
 import java.util.logging.Level;

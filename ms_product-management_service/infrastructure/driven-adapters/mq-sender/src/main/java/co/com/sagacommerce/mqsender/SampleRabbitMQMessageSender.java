@@ -7,6 +7,7 @@ import jakarta.annotation.PreDestroy;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.rabbitmq.OutboundMessage;
@@ -19,6 +20,7 @@ import static co.com.sagacommerce.mqsender.config.DTOUtils.fromDTOToBytes;
 
 @Log
 @Component
+@DependsOn("initializer") // dejamos unsa dependencia de BD mejor !!
 public class SampleRabbitMQMessageSender implements PurchaseTransactionGateway {
 
     private final String outputQueue;
