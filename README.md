@@ -93,13 +93,14 @@ Para mantener la claridad visual del diagrama, los flujos de error no se represe
 >    ni la futura escalabilidad del sistema. En caso de ser necesario, el servicio puede escindirse fácilmente en componentes independientes sin refactorizaciones profundas.
 >    Por otro lado es importante recalcar que, la adopción de programación reactiva con Reactor y Webflux aporta resiliencia, trazabilidad y manejo centralizado de errores, 
 >    facilitando la integración de los procesos sin perder calidad técnica ni modularidad.
->    > [!TIP] : Estos 2 componenetes son quienes, en verdad, tienen gran parte de la lógica de negocio o, como se denomina en Domain Driven Design, son quienes contienen mayor parte de la dificultad esencial.
+>     Estos 2 componenetes son quienes, en verdad, tienen gran parte de la lógica de negocio o, como se denomina en Domain Driven Design, son quienes contienen mayor parte de la dificultad esencial.
 >    > Es por tanto que se decide hacer la implementación más real sobre estos. 
 > 
 >    ![image](https://github.com/user-attachments/assets/4208bbae-cc1d-4b07-b770-312cdada8df4)
 >   
-> - `commerce-api (API Gateway)`  : En el diseño general, este componente funciona como un API Gateway puro, cuyo rol es enrutar solicitudes hacia los microservicios internos. Para el MVP, se ha decidido mockearlo directamente, ya que no contiene lógica de negocio relevante. Esto permite      > enfocarse en validar los flujos funcionales críticos sin sobrecargar la solución con infraestructura innecesaria en esta fase.
-> [!NOTE]
+> - `commerce-api (API Gateway)`  : En el diseño general, este componente funciona como un API Gateway puro, cuyo rol es enrutar solicitudes hacia los microservicios internos. Para el MVP, se ha decidido mockearlo directamente, ya que no contiene lógica de negocio relevante. Esto permite enfocarse en validar los flujos funcionales críticos sin sobrecargar la solución con infraestructura innecesaria en esta fase.
+>   
+>   ![image](https://github.com/user-attachments/assets/ee818cfa-ce92-4432-bcbf-5de53918cdb7)
 >
 >  Estos 2 microservicios representan la lógica principal del flujo de compra, permitiendo:
 >    - Crear y gestionar órdenes
