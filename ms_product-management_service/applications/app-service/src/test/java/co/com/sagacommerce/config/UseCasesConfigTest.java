@@ -54,6 +54,12 @@ class UseCasesConfigTest {
         }
 
         @Bean
+        public PurchaseItemUpdaterRepository purchaseItemUpdaterRepository() {
+            return mock(PurchaseItemUpdaterRepository.class);
+        }
+
+
+        @Bean
         public PurchaseOrdersReaderRepository purchaseOrdersReaderRepository() {
             return mock(PurchaseOrdersReaderRepository.class);
         }

@@ -3,7 +3,6 @@ package com.rabbitMQ.mock.DrivenAdapters.rabbitMQ.sender;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rabbitMQ.mock.domain.dto.Purchase;
 import com.rabbitmq.client.AMQP;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.java.Log;
@@ -18,7 +17,6 @@ import reactor.rabbitmq.Sender;
 
 import java.time.Duration;
 import java.util.UUID;
-import java.util.concurrent.TimeoutException;
 
 import static com.rabbitMQ.mock.DrivenAdapters.rabbitMQ.consumer.JsonUtils.fromJson;
 
