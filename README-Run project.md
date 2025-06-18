@@ -6,6 +6,7 @@
 >  > * SDK Java 21
 >  > * Docker
 >  > * Gradle 8 or major
+>  > * IntelliJ IDEA
 >  >
 
 > [!NOTE]  
@@ -23,28 +24,35 @@
 > > ![image](https://github.com/user-attachments/assets/19cc97fc-44e1-4dc5-a096-2a16be247d44)
 > > 
 > > 3. run API GATEWAY(commerce-api) (mock)
-> > * When you run the mock you will see that the first thing it does is to send messages to a request queue.
 > >   
-> >   ![image](https://github.com/user-attachments/assets/ea7f63bd-ca71-47bc-8422-b0816484b56a)
-> > * If you check in the broker (rabbit) you can see the messages sent and by which queue they were sent.
+> >   ![image](https://github.com/user-attachments/assets/592843ce-b2db-4d15-985c-7f90248f5190)
+> >
+> > * You can send a couple of requests to test the connection to rabbit but you will not get any response as they will be queued in the queue. So let's wait for a real test.
+> >   
+> > 4. run ms_product-management_service
+> >
+> > ![image](https://github.com/user-attachments/assets/40071b49-3763-440b-83f7-26d5beb19e51)
 > > 
-> > * ![image](https://github.com/user-attachments/assets/8b9d9c2c-6eed-47a8-9134-73a52262df75)
-> > 5. run ms_product-management_service
-> > * As you can see, it is already starting to consume the previously pasted messages. Therefore, we can already see a resilience to failures (for example, if this microservice were to fall momentarily).
+> > * If there are no messages queued in the input queue then you will only see the microservice startup logs.
 > > 
-> >   ![image](https://github.com/user-attachments/assets/05a2214c-92b3-4dd5-a51d-77abf2a4d6ae)
+> > * On the other hand, if for some reason there were messages already glued... 
+> > 
+> > ![image](https://github.com/user-attachments/assets/05a2214c-92b3-4dd5-a51d-77abf2a4d6ae)
+> > As you can see, it is already starting to consume the previously pasted messages. Therefore, we can already see a resilience to failures (for example, if this microservice were to fall momentarily).
 
 > [!TIP]
 > > ## Activate observability (opentelemetry)
 > > The project has enabled observability of distributed traces and response times per request.
 > >  * Opentelemetry and Jaeger (Backend) (open source, distributed tracing platform)
 > > ![image](https://github.com/user-attachments/assets/556605aa-e039-4e51-8548-b9fbe3dfde47)
-> >     
-> > 1.Jaeger :
-> >  go to [http://localhost:15672/](http://localhost:16686/search)
-> > 2. Search service
+> >
+> > 5. (OPTIONAL, only if you want to activate observability) get  [jaeger](https://www.jaegertracing.io/docs/1.6/getting-started/)
+> > 
+> > 6. go to [http://localhost:15672/](http://localhost:16686/search)
+> > 
+> > 7. Search service
 > > ![image](https://github.com/user-attachments/assets/1d70a8fc-2708-4d3d-a746-df8356661266)
-> > 3. In this case choose the productManagement microservice and you can already see the traces from the operations performed. In this case a GET of products by category.
+> > In this case choose the productManagement microservice and you can already see the traces from the operations performed. In this case a GET of products by category.
 > > 
 > > ![image](https://github.com/user-attachments/assets/6c69a320-e3d7-46f4-814b-0781df6399ff)
 > >
