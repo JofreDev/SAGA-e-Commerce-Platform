@@ -121,12 +121,100 @@
 >
 > ![image](https://github.com/user-attachments/assets/2197e3dc-0018-42c2-9df6-8c75cb4a84d1)
 >
-> Guala !!! Nueva cola se genera para reportar errores a quien tenga que escucharlos y darle manejo. 
+> Guala !!! Nueva cola se genera para reportar errores a quien tenga que escucharlos y darle manejo.
+> ¿ Qué pasa si interceptamos la cola ?
+>
+> ![image](https://github.com/user-attachments/assets/dc55d6bc-be30-4cda-bf12-e916d25cdeaf)
+>
+> "error":"Invalid purchase order : Requested quantity greater than current inventory"  -   
+> Toma todo el mensaje o la petición de orden de compra y nos notifica sobre el nuevo error que sucedio !! 
+
+> [!IMPORTANT]  
+> 3. Compensación asíncrona de una transacción fallida (Coreografía en el patrón SAGA)
+>
+> Este caso de uso representa el escenario más complejo dentro del flujo, debido a las implicaciones que tiene en la lógica de negocio al no poder simplemente aplicar un rollback tradicional.
+> 
+> A diferencia de un rollback convencional, que se ejecuta inmediatamente en el contexto de una transacción fallida durante la operación sobre la base de datos, este mecanismo no es aplicable aquí porque el error no se produce en el microservicio que originó la operación (en este caso > ms_product-management_service), sino en uno de los servicios participantes posteriores.
+> 
+> En este contexto, el microservicio emisor considera que la operación fue exitosa y persiste sus cambios. Sin embargo, si alguno de los otros microservicios falla durante su procesamiento, es necesario que los servicios que ya aplicaron cambios reviertan sus operaciones para mantener la > consistencia del sistema. Esta acción es conocida como compensación en el patrón SAGA.
+> 
+> La compensación implica que cada microservicio implemente una lógica específica para revertir los efectos de sus operaciones, lo cual introduce un nivel significativo de complejidad tanto técnica como operativa. Además, la ejecución de estas compensaciones debe ser coordinada de forma > > asíncrona, lo que aumenta la sensibilidad del sistema ante nuevos fallos durante el proceso de reversión.
+
+> [!CAUTION]
+> Manos a la obra con este escenario.
+> 1. Partimos de que se genero una orden de compra exitosa como se mostraba en el caso de uso anterior.
+> * Orden de compra generada de manera exitosa :
+>   
+> ![image](https://github.com/user-attachments/assets/93941954-0eb1-41a6-b250-42c0cda88d2a)
+>
+> * No olvidemos los registros de las modificaciones que esta trasacción causa
+>
+> ![image](https://github.com/user-attachments/assets/451a9882-4d0b-4d04-b6d6-06e26058c211)
+>
+>  1. Genera cambios en el stock (update) de los productos
+>  2. Genera inserción a base de datos de los n nuevos items de compra
+>  3. Genera una nueva inserción a base de datos que es la orden de compra
+>
+
+> [!TIP]
+> Es decir que si un evento de (ejemplo) un pago fallido, nos llega devemos devolver las modificaciones realizadas, como :
+>  1. Buscar los productos involucrados en la transacción fallida y volver a dejar el stock de los productos como estaba (Query de busqueda and Update)
+>  2. Buscar los items que se generaron para la nueva orden de compra y eliminarlos
+>  3. Eliminar la orden de compra fallida
+>  4. Por ultimo generar un evento para que los demas sepan que `ms_product-management_service` ya realizó sun compensación. 
+>
+> Volviendo al estado en el que ibamos, vamos a simular un evento que llega a `ms_product-management_service` en donde se le indica que la Orden de compra que acababa de llegar falló más adelante yq ue por tanto se pide cancelación
+>
+> ```curl
+> curl --location 'localhost:8080/commerce-gateway/api/mock/sendOrder' \
+>--header 'Content-Type: application/json' \
+>--data '
+>{
+>  "id": 4,
+>  "clientId": "client-123",
+>  "date": "2025-06-15T10:30:00",
+>  "paymentMethod": "CREDIT_CARD",
+>  "comment": "Primera compra con descuento",
+>  "state": "CANCEL",
+>  "items": [
+>    {
+>      "productId": 1,
+>      "quantity": 2
+>    },
+>    {
+>      "productId": 2,
+>      "quantity": 1
+>    }
+>  ]
+>}
+>'
+> ```
+> 
+> Notese que el estado con que va a entrar es "CANCEL", evento con el que  `ms_product-management_service` entiende que tiene que iniciar una compensación.
+>
+> Compensación realizada !!!
+> 
+> ![image](https://github.com/user-attachments/assets/b6374eb6-489e-478f-93eb-f752c45a94ce)
+>
+> ¿ Qué dicen los logs del microservicio ?
+>
+> ![image](https://github.com/user-attachments/assets/7da2d5f9-815f-4ae2-bbe5-6538b3c04527)
+>
+> Al final vemos que "simplemente" se elimino la orden de compra pero sabemos que es mucho más complejo que solo eso.
+>
+> Por ultimo, ¿ Qué nos cuentan las trazas ?
+> 
+> ![image](https://github.com/user-attachments/assets/6c35de43-5c1b-4e51-839c-e8fd2f1ba501)
+>
+> Como se puede observar, se reflejan varias de las operaciones necesarias de las que habiamos hablado anteriormente.
+>
+> ¿ Y los producto si tienen otra vez si stock original ?
+>
+> ![image](https://github.com/user-attachments/assets/b52614c2-7915-45a3-91cc-c483c9306b6a)
+>
+> 50 y 20 unidades decada producto es lo que hay inicialmente. La compensación fue un exito !! 
 
 
 
 
 
-
-> [!NOTE] 
-> 3.  Compensación asincronica de una transacción fallida (coreografía SAGA) 
