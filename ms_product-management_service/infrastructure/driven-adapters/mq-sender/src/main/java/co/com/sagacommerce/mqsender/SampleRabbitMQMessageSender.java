@@ -26,7 +26,7 @@ public class SampleRabbitMQMessageSender implements PurchaseTransactionGateway {
     private final String outputQueue;
     private final Sender sender;
 
-    public SampleRabbitMQMessageSender(@Value("{rabbit.mq.output-queue}") String outputQueue,
+    public SampleRabbitMQMessageSender(@Value("${rabbit.mq.output-queue}") String outputQueue,
                                        @Qualifier("mainSender") Sender sender) {
         this.sender = sender;
         this.outputQueue = outputQueue;
