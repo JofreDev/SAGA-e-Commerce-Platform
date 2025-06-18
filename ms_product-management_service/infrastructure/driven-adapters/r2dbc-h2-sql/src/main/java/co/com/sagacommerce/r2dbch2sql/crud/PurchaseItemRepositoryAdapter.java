@@ -26,7 +26,7 @@ public class PurchaseItemRepositoryAdapter extends ReactiveAdapterOperations<
                 .map(this::toEntity);
     }
 
-    public Mono<Void> deletePurchaseItemById(Integer purchaseItemId) {
-        return repository.deleteById(purchaseItemId);
+    public Mono<Integer> deleteAllByPurchaseId(Integer purchaseId) {
+        return repository.deleteAllByPurchaseId(purchaseId);
     }
 }

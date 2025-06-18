@@ -37,8 +37,8 @@ public class PurchaseOrdersUpdaterRepositoryImp implements PurchaseOrdersReposit
     }
 
     @Override
-    public Mono<PurchaseDTO> deletePurchaseOrder(PurchaseDTO purchaseDTO) {
-        return null;
+    public Mono<Void> deletePurchaseOrder(PurchaseDTO purchaseDTO) {
+        return purchaseRepositoryAdapter.deletePurchaseById(purchaseDTO.getId());
     }
 
 

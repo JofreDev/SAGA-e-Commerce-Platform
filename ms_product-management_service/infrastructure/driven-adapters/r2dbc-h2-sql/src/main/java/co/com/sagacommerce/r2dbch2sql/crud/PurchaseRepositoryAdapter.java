@@ -5,6 +5,7 @@ import co.com.sagacommerce.r2dbch2sql.entity.Purchase;
 import co.com.sagacommerce.r2dbch2sql.helper.ReactiveAdapterOperations;
 import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Mono;
 
 @Repository
 public class PurchaseRepositoryAdapter extends ReactiveAdapterOperations<
@@ -16,6 +17,10 @@ public class PurchaseRepositoryAdapter extends ReactiveAdapterOperations<
 
     public PurchaseRepositoryAdapter(PurchaseCrudRepository repository, ObjectMapper mapper) {
         super(repository, mapper, entity -> mapper.map(entity, PurchaseDTO.class));
+    }
+
+    public Mono<Void> deletePurchaseById(Integer purchaseId) {
+        return repository.deleteById(purchaseId);
     }
 
 }

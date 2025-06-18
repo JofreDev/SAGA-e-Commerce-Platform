@@ -1,5 +1,6 @@
 package co.com.sagacommerce.r2dbch2sql;
 
+import co.com.saga.commerce.model.gateways.repository.PurchaseItemUpdaterRepository;
 import co.com.sagacommerce.model.dto.PurchaseItemDTO;
 import co.com.sagacommerce.model.validation.exceptions.TechnicalException;
 import co.com.sagacommerce.r2dbch2sql.crud.PurchaseItemRepositoryAdapter;
@@ -12,7 +13,7 @@ import static co.com.sagacommerce.model.validation.exceptions.message.TechnicalE
 
 @Repository
 @RequiredArgsConstructor
-public class PurchaseItemUpdaterRepositoryImp {
+public class PurchaseItemUpdaterRepositoryImp implements PurchaseItemUpdaterRepository {
 
     private final PurchaseItemRepositoryAdapter purchaseItemRepositoryAdapter;
 
@@ -24,7 +25,7 @@ public class PurchaseItemUpdaterRepositoryImp {
                 .doOnNext(item -> System.out.println("Item guardado " + item));
     }
 
-    public Mono<Void> deletePurchaseItemOrder(Integer purchaseItemId){
-        return purchaseItemRepositoryAdapter.deletePurchaseItemById(purchaseItemId);
+    public Mono<Integer> deletePurchaseItemOrder(Integer purchaseId) {
+        return purchaseItemRepositoryAdapter.deleteAllByPurchaseId(purchaseId);
     }
 }

@@ -16,7 +16,9 @@ import reactor.rabbitmq.QueueSpecification;
 import reactor.rabbitmq.Receiver;
 import reactor.rabbitmq.Sender;
 
+import java.time.Duration;
 import java.util.UUID;
+import java.util.concurrent.TimeoutException;
 
 import static com.rabbitMQ.mock.DrivenAdapters.rabbitMQ.consumer.JsonUtils.fromJson;
 
@@ -60,6 +62,7 @@ public class SampleRabbitMQMessageSender {
                 .thenMany(receiver.consumeAutoAck(replyQueue))
                 .filter(delivery -> correlationId.equals(delivery.getProperties().getCorrelationId()))
                 .next()
+                .timeout(Duration.ofMillis(500))
                 .flatMap(delivery -> fromJson(new String(delivery.getBody()), JsonNode.class));
     }
 

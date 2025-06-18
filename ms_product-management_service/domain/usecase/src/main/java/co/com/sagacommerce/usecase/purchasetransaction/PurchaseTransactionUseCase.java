@@ -29,7 +29,7 @@ public class PurchaseTransactionUseCase {
     private final ProductStockUpdaterRepository productStockUpdater;
     private final PurchaseTransactionGateway purchaseTransactionGateway;
 
-    private static final String STATE_PENDING = "PENDING";
+    public static final String STATE_PENDING = "PENDING";
 
     public Mono<Void> sendPurchaseOrderEvent(PurchaseDTO purchaseRequest, String correlationId) {
 
