@@ -1,4 +1,4 @@
-[![build](https://github.com/JofreDev/SAGA-e-Commerce-Platform/actions/workflows/main.yml/badge.svg)](https://github.com/JofreDev/SAGA-e-Commerce-Platform/actions)
+[![build](https://github.com/JofreDev/SAGA-e-Commerce-Platform/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/JofreDev/SAGA-e-Commerce-Platform/actions)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=JofreDev_SAGA-e-Commerce-Platform&metric=alert_status)](https://sonarcloud.io/summary/overall?id=JofreDev_SAGA-e-Commerce-Platform)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=JofreDev_SAGA-e-Commerce-Platform&metric=coverage)](https://sonarcloud.io/summary/overall?id=JofreDev_SAGA-e-Commerce-Platform)
 [![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=JofreDev_SAGA-e-Commerce-Platform&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=JofreDev_SAGA-e-Commerce-Platform)
